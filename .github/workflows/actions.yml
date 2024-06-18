@@ -1,0 +1,32 @@
+# Reference:
+# 1. https://github.com/marketplace/actions/s3-sync
+
+name: Sync to S3
+
+on:
+  push:
+    branches:
+      - 'main'       # Run only on main branch
+      - '!feature-*' # Ignore this branch pattern. Good for saving ideas/trial code.
+
+permissions:
+  contents: read
+
+jobs:
+
+  build_main:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+      - uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION:  ${{ secrets.AWS_REGION }}
+          SOURCE_DIR: 'Website'
+
