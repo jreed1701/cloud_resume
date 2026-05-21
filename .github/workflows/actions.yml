@@ -1,5 +1,6 @@
-# Reference:
+# References:
 # 1. https://github.com/marketplace/actions/s3-sync
+# 2. https://docs.aws.amazon.com/cli/latest/reference/cloudfront/create-invalidation.html
 
 name: Sync to S3
 
@@ -20,13 +21,25 @@ jobs:
 
     steps:
       - uses: actions/checkout@master
-      - uses: jakejarvis/s3-sync-action@master
+
+      - name: Sync to S3
+        uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --follow-symlinks --delete
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION:  ${{ secrets.AWS_REGION }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
           SOURCE_DIR: 'Website'
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
 
