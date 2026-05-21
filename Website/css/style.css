@@ -285,6 +285,43 @@ a.active {
     background: url(../img/banner.jpg);
     background-size: cover;
     height: 100vh;
+    position: relative;
+}
+
+#home::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.50);
+    z-index: 0;
+}
+
+#home .container {
+    position: relative;
+    z-index: 1;
+}
+
+#home h1,
+#home h2,
+#home h3 {
+    color: #ffffff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+#home h4 {
+    color: #a8bcff;
+}
+
+#home h4::before {
+    background: #a8bcff;
+}
+
+.hero-bio {
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 15px;
+    line-height: 26px;
+    margin-top: 20px;
+    max-width: 560px;
 }
 
 .table-cell {
@@ -302,8 +339,8 @@ a.active {
 ==================================================*/
 
 .profile-pic {
-    width: 220px;
-    height: 220px;
+    width: 280px;
+    height: 280px;
     border-radius: 50%;
     object-fit: cover;
     object-position: center top;
@@ -313,9 +350,40 @@ a.active {
 
 @media (max-width: 767px) {
     .profile-pic {
-        width: 160px;
-        height: 160px;
+        width: 200px;
+        height: 200px;
     }
+}
+
+
+/* skill chips
+==================================================*/
+
+.skills-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-bottom: 1.2em;
+}
+
+.skill-chip {
+    display: inline-block;
+    background-color: #f0f3ff;
+    color: #425BB5;
+    border: 1px solid #c5cff5;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.skill-chip:hover {
+    background-color: #425BB5;
+    color: #ffffff;
+    border-color: #425BB5;
 }
 
 
@@ -654,7 +722,57 @@ a.active {
 
 #contact {
     padding: 100px 0;
-    background: #f3f3f3
+    background: #f3f3f3;
+}
+
+.contact-item {
+    text-align: center;
+    padding: 20px;
+}
+
+.contact-link {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.contact-link:hover {
+    color: #425BB5;
+    text-decoration: none;
+}
+
+.contact-icon {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 12px;
+    color: #425BB5;
+    transition: transform 0.2s ease;
+}
+
+.contact-link:hover .contact-icon {
+    transform: translateY(-4px);
+}
+
+.contact-link h3 {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+    color: inherit;
+}
+
+.contact-link p {
+    color: #666;
+    font-size: 13px;
+    margin: 0;
+    transition: color 0.2s ease;
+}
+
+.contact-link:hover p {
+    color: #425BB5;
 }
 
 #contact-form input,
